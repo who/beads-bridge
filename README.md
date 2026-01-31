@@ -1,102 +1,100 @@
-# beads-bridge
+# Beads Bridge
 
-A bridge from discord to beads
+A Discord bot that lets you file [Beads](https://github.com/steveyegge/beads) issues from anywhere using natural language.
 
-## Tech Stack
+## The Problem
 
-- **Language**: Python
-- **Package Manager**: uv
-- **Linter**: ruff
+You're away from your desk when you notice a bug or think of a task. By the time you get back to your development machine, you've forgotten the details.
 
-## Quick Start
+## The Solution
+
+Send a message to Discord (typed or dictated), and Beads Bridge uses Claude to interpret it and execute the corresponding `bd` command on your local machine. Fire-and-forget: you get a ✅ or ❌ reaction, nothing more.
+
+```
+!bd bug for solar project: panel efficiency is wrong in the afternoon
+```
+
+## How It Works
+
+```
+Discord Message → Claude (interprets) → bd CLI (executes) → ✅
+```
+
+- **Text-agnostic**: Type, use voice-to-text, paste—doesn't matter
+- **Write-only**: Creates, updates, closes, and deletes issues (no queries—there's no feedback channel)
+- **Multi-project**: Automatically detects which project you mean from `bd daemons list`
+
+## Setup
+
+### Prerequisites
+
+- Python 3.11+
+- [uv](https://docs.astral.sh/uv/) package manager
+- [Beads](https://github.com/steveyegge/beads) CLI installed
+- Anthropic API key
+- Discord bot token
+
+### Installation
 
 ```bash
-# Install dependencies
+git clone https://github.com/who/beads-bridge
+cd beads-bridge
 uv sync
-
-# Run the project
-uv run python -m app.main
-
-# Run tests
-uv run pytest
-
-# Lint code
-uv run ruff check .
-uv run ruff format --check .
 ```
 
-## Workflow
+### Discord Bot Setup
 
-This project uses beads (`bd`) for issue tracking and Ralph automation loops for implementation.
+1. Create a bot at [Discord Developer Portal](https://discord.com/developers/applications)
+2. Enable **Message Content Intent** under Bot settings
+3. Add bot to your server with permissions: Send Messages, Add Reactions, Read Message History
+4. Get your server and channel IDs (enable Developer Mode in Discord settings)
 
-### Kickstart Your Feature
-
-Run `./ortus/idea.sh` to start. You'll be asked whether you have a PRD or just an idea:
-
-**Option 1: You have a PRD (non-interactive)**
-```bash
-./ortus/idea.sh --prd path/to/your-prd.md
-```
-Your PRD will be automatically decomposed into a beads issue graph:
-- Creates an epic with hierarchical implementation tasks
-- Sets up proper dependencies between issues
-- Uses parallel sub-agents for efficient issue creation
-- Runs in automated mode (no permission prompts)
-
-**Option 1b: You have a PRD (interactive)**
-```bash
-./ortus/idea.sh
-# Choose [1] "Yes, I have a PRD"
-# Provide the path to your PRD file
-```
-
-**Option 2: You have an idea**
-```bash
-./ortus/idea.sh "Your feature idea"
-# Or run ./ortus/idea.sh and choose [2] "Nope, just an idea"
-```
-Claude will:
-1. Expand your idea into a feature description
-2. Run an interactive interview to clarify requirements
-3. Generate a PRD document
-4. Create implementation tasks from the PRD
-
-### Implement with Ralph
-
-Once tasks exist, run the implementation loop:
+### Configuration
 
 ```bash
-./ortus/ralph.sh
+export ANTHROPIC_API_KEY="your-key"
+export DISCORD_BOT_TOKEN="your-bot-token"
+export DISCORD_GUILD_ID="your-server-id"
+export DISCORD_CHANNEL_ID="your-channel-id"
+export DISCORD_COMMAND_PREFIX="!bd"  # optional, defaults to !bd
 ```
 
-Ralph picks up tasks and implements them one by one, running tests and committing changes.
-
-### Issue Tracking Commands
+### Run
 
 ```bash
-bd list              # List all issues
-bd ready             # Show issues ready to work
-bd show <id>         # View issue details
-bd stats             # Project statistics
+uv run beads-bridge
 ```
 
-## Project Structure
+## Usage Examples
 
+| Message | What happens |
+|---------|--------------|
+| `!bd bug for solar: panel calc is wrong` | Creates bug in solar project |
+| `!bd close bd-a1b2, it's fixed` | Closes issue with reason |
+| `!bd mark bd-c3d4 in progress` | Updates status |
+| `!bd high priority bug: auth broken` | Creates P1 bug |
+| `!bd epic for API: add OAuth` | Creates epic |
+
+## Running as a Service (Optional)
+
+```bash
+# Create systemd user service
+mkdir -p ~/.config/systemd/user
+# Add beads-bridge.service (see prd/intake.md for template)
+systemctl --user enable --now beads-bridge
 ```
-beads-bridge/
-├── src/                  # Source code
-│   └── app/              # Application package
-├── tests/                # Test suite
-├── ortus/                # Ortus automation scripts and prompts
-│   └── prompts/          # AI prompt templates
-├── prd/                  # Product requirements documents
-├── .beads/               # Issue tracking data
-└── .claude/              # Claude Code settings
+
+## Development
+
+```bash
+uv run ruff check .   # Lint
+uv run ruff format .  # Format
+uv run pytest         # Test
 ```
 
-## Repository
+## Ortus Automation
 
-[who/beads-bridge](https://github.com/who/beads-bridge)
+This project was scaffolded with [Ortus](https://github.com/anthropics/ortus), which provides AI-powered development workflows including PRD-to-issues decomposition and automated implementation loops. See the `ortus/` directory for scripts and prompts.
 
 ## License
 
