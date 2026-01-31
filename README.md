@@ -94,7 +94,7 @@ uv run pytest         # Test
 
 ## Ortus Automation
 
-This project was scaffolded with [Ortus](https://github.com/anthropics/ortus), which provides AI-powered development workflows including PRD-to-issues decomposition and automated implementation loops. See the `ortus/` directory for scripts and prompts.
+This project was scaffolded with [Ortus](https://github.com/who/ortus), which provides AI-powered development workflows including PRD-to-issues decomposition and automated implementation loops. See the `ortus/` directory for scripts and prompts.
 
 ## License
 
