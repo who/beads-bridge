@@ -3,6 +3,9 @@
 import os
 
 import discord
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from beads_bridge.processor import process_command
 

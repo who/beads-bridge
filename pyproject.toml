@@ -8,6 +8,7 @@ license = "MIT"
 dependencies = [
     "anthropic>=0.40.0",
     "discord.py>=2.3.0",
+    "python-dotenv>=1.0.0",
 ]
 
 [project.scripts]
