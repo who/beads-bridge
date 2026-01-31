@@ -49,7 +49,7 @@ def get_projects_context() -> str:
             ["bd", "daemons", "list", "--json"],
             capture_output=True,
             text=True,
-            timeout=5,
+            timeout=10,
         )
         if result.returncode == 0 and result.stdout.strip():
             return result.stdout.strip()
