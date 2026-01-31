@@ -62,8 +62,14 @@ export DISCORD_COMMAND_PREFIX="!bd"  # optional, defaults to !bd
 ### Run
 
 ```bash
+# Using the installed entry point (recommended)
 uv run beads-bridge
+
+# Or run the module directly
+uv run python -m beads_bridge.bot
 ```
+
+**Note:** The processor (`processor.py`) is not a separate service—it's a module that the bot imports. When you start the bot, it automatically uses the processor to interpret commands via Claude.
 
 ## Usage Examples
 
