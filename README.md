@@ -11,7 +11,7 @@ You're away from your desk when you notice a bug or think of a task. By the time
 Send a message to Discord (typed or dictated), and Beads Bridge uses Claude to interpret it and execute the corresponding `bd` command on your local machine. Fire-and-forget: you get a ✅ or ❌ reaction, nothing more.
 
 ```
-!bd bug for solar project: panel efficiency is wrong in the afternoon
+bug for solar project: panel efficiency is wrong in the afternoon
 ```
 
 ## How It Works
