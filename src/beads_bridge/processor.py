@@ -117,5 +117,9 @@ def process_command(text: str) -> dict:
     except anthropic.APIError as e:
         result["error"] = f"Anthropic API error: {e}"
         print(f"[processor] {result['error']}")
+    except TypeError as e:
+        # Anthropic client raises TypeError for auth issues
+        result["error"] = f"Anthropic client error: {e}"
+        print(f"[processor] {result['error']}")
 
     return result
