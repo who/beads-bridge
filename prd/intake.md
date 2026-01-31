@@ -4,7 +4,7 @@
 
 **Version:** 1.0  
 **Date:** January 30, 2026  
-**Author:** Generated with Claude
+**Author:** github.com/who (and claude)
 
 ---
 
